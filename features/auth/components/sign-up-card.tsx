@@ -129,11 +129,11 @@ export function SignInUpCard() {
         </CardContent>
         <DottedSeparator className="px-7" />
         <CardContent className="p-7 flex flex-col gap-y-4">
-          <Button variant="secondary" size="lg" className="w-full">
+          <Button variant="outline" size="lg" className="w-full">
             <FcGoogle className="mr-2 size-5" />
             Login with Google
           </Button>
-          <Button variant="secondary" size="lg" className="w-full">
+          <Button variant="outline" size="lg" className="w-full">
             <FaGithub className="mr-2 size-5" />
             Login with Github
           </Button>
