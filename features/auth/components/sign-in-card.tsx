@@ -23,27 +23,21 @@ import { FaGithub } from "react-icons/fa";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { SignInSchema } from "../schemas";
+import { useSignIn } from "../api/use-sign-in";
 
 export function SignInCard() {
-  const FormSchema = z.object({
-    email: z.string().email({
-      message: "Invalid email address",
-    }),
-    password: z.string().min(8, {
-      message: "Password must be at least 8 characters",
-    }),
-  });
-
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const { mutate } = useSignIn();
+  const form = useForm<z.infer<typeof SignInSchema>>({
+    resolver: zodResolver(SignInSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof FormSchema>) => {
-    console.log(values);
+  const onSubmit = (values: z.infer<typeof SignInSchema>) => {
+    mutate({  json: values });  
   };
 
   return (

@@ -23,22 +23,13 @@ import { FaGithub } from "react-icons/fa";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { SignUpSchema } from "../schemas";
+import { useSignup } from "../api/use-sign-up";
 
-export function SignInUpCard() {
-  const FormSchema = z.object({
-    username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
-    email: z.string().email({
-      message: "Invalid email address",
-    }),
-    password: z.string().min(8, {
-      message: "Password must be at least 8 characters",
-    }),
-  });
-
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+export function SignUpCard() {
+  const { mutate } = useSignup();
+  const form = useForm<z.infer<typeof SignUpSchema>>({
+    resolver: zodResolver(SignUpSchema),
     defaultValues: {
       username: "",
       email: "",
@@ -46,8 +37,8 @@ export function SignInUpCard() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof FormSchema>) => {
-    console.log(values);
+  const onSubmit = (values: z.infer<typeof SignUpSchema>) => {
+    mutate({ json: values });
   };
 
   return (
